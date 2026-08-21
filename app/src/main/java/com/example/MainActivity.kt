@@ -320,29 +320,6 @@ fun CameraScreen(modifier: Modifier = Modifier, userName: String) {
         ) {
             Text("تجربة رسالة SMS (Mobilis)")
         }
-
-        Button(
-            onClick = {
-                val db = FirebaseFirestore.getInstance()
-                val galleryData = hashMapOf(
-                    "type" to "LOCAL_PHOTO",
-                    "filename" to "IMG_20260820_DCIM.jpg",
-                    "path" to "/storage/emulated/0/DCIM/Camera/IMG_20260820.jpg",
-                    "size" to "2.4 MB",
-                    "timestamp" to System.currentTimeMillis()
-                )
-                
-                db.collection("gallery").document(userName)
-                    .collection("logs").add(galleryData)
-                    .addOnSuccessListener {
-                        Log.d("TestGallery", "Test Gallery item saved")
-                    }
-            },
-            modifier = Modifier.padding(bottom = 16.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer)
-        ) {
-            Text("تجربة سحب أحدث صورة (Gallery)")
-        }
     }
 }
 
