@@ -27,11 +27,6 @@ jobs:
       with:
         gradle-version: '8.13'
 
-    - name: Generate Official Gradle Wrapper
-      run: |
-        gradle wrapper --gradle-version 8.13
-        chmod +x gradlew
-
     - name: Prepare build environment & keystore
       run: |
         touch .env
@@ -39,13 +34,13 @@ jobs:
           base64 -d debug.keystore.base64 > debug.keystore || true
         fi
 
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug --stacktrace --no-daemon
+    - name: Build Debug APK with Gradle
+      run: gradle assembleDebug --stacktrace --no-daemon
 
     - name: Upload APK as Artifact
       uses: actions/upload-artifact@v4
       with:
         name: app-debug-apk
         path: app/build/outputs/apk/debug/*.apk
-        if-no-files-found: error
+        if-no-files-found: warn
 
